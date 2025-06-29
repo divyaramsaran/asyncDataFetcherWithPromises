@@ -19,3 +19,9 @@ const posts = [
     content: "More content from Alice",
   },
 ];
+
+const comments = [
+  { id: 1, postId: 1, content: "Comment on Alice's post" },
+  { id: 2, postId: 2, content: "Comment on Bob's post" },
+  { id: 3, postId: 1, content: "Another comment on  Alice's post" },
+];
