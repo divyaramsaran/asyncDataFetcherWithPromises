@@ -39,11 +39,15 @@ const getUserInput = () => {
 };
 
 const fetchUserById = (userId, userList) => {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     const foundUser = userList.find((user) => {
       return user.id === userId;
     });
-    resolve(foundUser);
+    if (!foundUser) {
+      reject(new Error('User not found.'));
+    } else {
+      resolve(foundUser);
+    }
   });
 };
 
@@ -80,4 +84,7 @@ fetchUserById(getUserInput(), userList)
     comments.forEach((comment) => {
       console.log(`Comment ID: ${comment.id}, Content: ${comment.content}`);
     });
+  })
+  .catch((error) => {
+    console.error('Error:', error.message);
   });
