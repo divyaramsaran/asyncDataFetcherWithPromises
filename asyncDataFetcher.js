@@ -56,10 +56,10 @@ const fetchPosts = ({ id }, posts) => {
   });
 };
 
-const fetchComments = (postId, comments) => {
+const fetchComments = (posts, comments) => {
   return new Promise((resolve) => {
     const postComments = comments.filter((comment) => {
-      return comment.postId === postId;
+      return posts.some((post) => post.id === comment.postId);
     });
     resolve(postComments);
   });
@@ -68,6 +68,9 @@ const fetchComments = (postId, comments) => {
 fetchUser(input(), users)
   .then((user) => {
     return fetchPosts(user, posts);
+  })
+  .then((posts) => {
+    return fetchComments(posts, comments);
   })
   .then((list) => {
     console.log(list);
