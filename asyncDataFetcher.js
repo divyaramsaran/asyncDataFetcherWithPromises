@@ -46,3 +46,10 @@ const fetchUserData = (userId, users) => {
     resolve(person);
   });
 };
+
+const userInput = fetchUserData(Number(prompt("Enter a number")), users).then(
+  (user) => {
+    console.log(user);
+    return user;
+  }
+);
