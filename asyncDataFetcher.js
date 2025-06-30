@@ -56,6 +56,15 @@ const fetchPosts = ({ id }, posts) => {
   });
 };
 
+const fetchComments = (postId, comments) => {
+  return new Promise((resolve) => {
+    const postComments = comments.filter((comment) => {
+      return comment.postId === postId;
+    });
+    resolve(postComments);
+  });
+};
+
 fetchUser(input(), users)
   .then((user) => {
     return fetchPosts(user, posts);
