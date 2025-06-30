@@ -38,4 +38,11 @@ const input = () => {
     : userId;
 };
 
-console.log(input());
+const fetchUserData = (userId, users) => {
+  return new Promise((resolve) => {
+    const person = users.find((user) => {
+      return user.id === userId;
+    });
+    resolve(person);
+  });
+};
