@@ -38,7 +38,7 @@ const input = () => {
     : userId;
 };
 
-const fetchUserData = (userId, users) => {
+const fetchUser = (userId, users) => {
   return new Promise((resolve) => {
     const person = users.find((user) => {
       return user.id === userId;
@@ -47,9 +47,20 @@ const fetchUserData = (userId, users) => {
   });
 };
 
-const userInput = fetchUserData(Number(prompt("Enter a number")), users).then(
-  (user) => {
-    console.log(user);
-    return user;
-  }
-);
+const fetchPosts = ({ id }, posts) => {
+  return new Promise((resolve) => {
+    const userPosts = posts.filter((post) => {
+      return post.userId === id;
+    });
+    resolve(userPosts);
+  });
+};
+
+fetchUser(input(), users)
+  .then((user) => {
+    return fetchPosts(user, posts);
+  })
+  .then((list) => {
+    console.log(list);
+    return list;
+  });
