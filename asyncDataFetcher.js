@@ -1,10 +1,10 @@
-const users = [
+const userList = [
   { id: 1, name: "Alice", age: 30 },
   { id: 2, name: "Bob", age: 25 },
   { id: 3, name: "Charlie", age: 35 },
 ];
 
-const posts = [
+const postList = [
   {
     id: 1,
     userId: 1,
@@ -20,64 +20,64 @@ const posts = [
   },
 ];
 
-const comments = [
+const commentList = [
   { id: 1, postId: 1, content: "Comment on Alice's post" },
   { id: 2, postId: 2, content: "Comment on Bob's post" },
   { id: 3, postId: 1, content: "Another comment on  Alice's post" },
 ];
 
-const input = () => {
+const getUserInput = () => {
   console.clear();
   console.log("Available Users:");
-  users.forEach((user) => {
+  userList.forEach((user) => {
     console.log(`ID: ${user.id}, Name: ${user.name}`);
   });
-  const userId = parseInt(prompt(`Enter user ID (1-${users.length}):`), 10);
-  return isNaN(userId) || userId < 1 || userId > users.length
-    ? input()
-    : userId;
+  const selectedUserId = parseInt(prompt(`Enter user ID (1-${userList.length}):`), 10);
+  return isNaN(selectedUserId) || selectedUserId < 1 || selectedUserId > userList.length
+    ? getUserInput()
+    : selectedUserId;
 };
 
-const fetchUser = (userId, users) => {
+const fetchUserById = (userId, userList) => {
   return new Promise((resolve) => {
-    const person = users.find((user) => {
+    const foundUser = userList.find((user) => {
       return user.id === userId;
     });
-    resolve(person);
+    resolve(foundUser);
   });
 };
 
-const fetchPosts = ({ id }, posts) => {
+const fetchPostsByUser = ({ id }, postList) => {
   return new Promise((resolve) => {
-    const userPosts = posts.filter((post) => {
+    const userPosts = postList.filter((post) => {
       return post.userId === id;
     });
     resolve(userPosts);
   });
 };
 
-const fetchComments = (posts, comments) => {
+const fetchCommentsForPosts = (posts, commentList) => {
   return new Promise((resolve) => {
-    const postComments = comments.filter((comment) => {
+    const relatedComments = commentList.filter((comment) => {
       return posts.some((post) => post.id === comment.postId);
     });
-    resolve(postComments);
+    resolve(relatedComments);
   });
 };
 
-fetchUser(input(), users)
+fetchUserById(getUserInput(), userList)
   .then((user) => {
     console.log("Id:", user.id, "Name:", user.name, "Age:", user.age);
-    return fetchPosts(user, posts);
+    return fetchPostsByUser(user, postList);
   })
   .then((posts) => {
     posts.forEach((post) => {
       console.log(`Post ID: ${post.id}, Title: ${post.title}`);
     });
-    return fetchComments(posts, comments);
+    return fetchCommentsForPosts(posts, commentList);
   })
-  .then((list) => {
-    list.forEach((comment) => {
+  .then((comments) => {
+    comments.forEach((comment) => {
       console.log(`Comment ID: ${comment.id}, Content: ${comment.content}`);
     });
   });
