@@ -67,12 +67,17 @@ const fetchComments = (posts, comments) => {
 
 fetchUser(input(), users)
   .then((user) => {
+    console.log("Id:", user.id, "Name:", user.name, "Age:", user.age);
     return fetchPosts(user, posts);
   })
   .then((posts) => {
+    posts.forEach((post) => {
+      console.log(`Post ID: ${post.id}, Title: ${post.title}`);
+    });
     return fetchComments(posts, comments);
   })
   .then((list) => {
-    console.log(list);
-    return list;
+    list.forEach((comment) => {
+      console.log(`Comment ID: ${comment.id}, Content: ${comment.content}`);
+    });
   });
