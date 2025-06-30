@@ -25,3 +25,17 @@ const comments = [
   { id: 2, postId: 2, content: "Comment on Bob's post" },
   { id: 3, postId: 1, content: "Another comment on  Alice's post" },
 ];
+
+const input = () => {
+  console.clear();
+  console.log("Available Users:");
+  users.forEach((user) => {
+    console.log(`ID: ${user.id}, Name: ${user.name}`);
+  });
+  const userId = parseInt(prompt(`Enter user ID (1-${users.length}):`), 10);
+  return isNaN(userId) || userId < 1 || userId > users.length
+    ? input()
+    : userId;
+};
+
+console.log(input());
