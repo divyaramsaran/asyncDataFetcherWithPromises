@@ -32,8 +32,13 @@ const getUserInput = () => {
   userList.forEach((user) => {
     console.log(`ID: ${user.id}, Name: ${user.name}`);
   });
-  const selectedUserId = parseInt(prompt(`Enter user ID (1-${userList.length}):`), 10);
-  return isNaN(selectedUserId) || selectedUserId < 1 || selectedUserId > userList.length
+  const selectedUserId = parseInt(
+    prompt(`Enter user ID (1-${userList.length}):`),
+    10
+  );
+  return isNaN(selectedUserId) ||
+    selectedUserId < 1 ||
+    selectedUserId > userList.length
     ? getUserInput()
     : selectedUserId;
 };
@@ -44,7 +49,7 @@ const fetchUserById = (userId, userList) => {
       return user.id === userId;
     });
     if (!foundUser) {
-      reject(new Error('User not found.'));
+      reject(new Error("User not found."));
     } else {
       resolve(foundUser);
     }
@@ -86,5 +91,5 @@ fetchUserById(getUserInput(), userList)
     });
   })
   .catch((error) => {
-    console.error('Error:', error.message);
+    console.error("Error:", error.message);
   });
